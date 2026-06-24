@@ -7,7 +7,7 @@ from datetime import date
 class MovieDetailResponseSchema(BaseModel):
     id: int
     name: str
-    date: Optional[date] = None
+    date: date | None
     score: float
     genre: str
     overview: str
@@ -16,10 +16,10 @@ class MovieDetailResponseSchema(BaseModel):
     status: str
     orig_lang: str
     budget: int
-    revenue: int
+    revenue: float
     country: str
 
-    class Config:
+    class ConfigDict:
         from_attributes = True
 
 
