@@ -6,12 +6,14 @@ from sqlalchemy import select, func
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from database import get_db, MovieModel
+from schemas import MovieDetailResponseSchema, MovieListResponseSchema
 
 router = APIRouter()
 
 
 @router.get(
     "/movies/",
+    response_model=MovieListResponseSchema,
     responses={404: {"description": "No movies found."}}
 )
 async def get_movies(
@@ -50,6 +52,7 @@ async def get_movies(
 
 @router.get(
     "/movies/{movie_id}/",
+    response_model=MovieDetailResponseSchema,
     responses={404: {"description": "Movie with the given ID was not found."}}
 )
 async def get_movie_by_id(
