@@ -11,13 +11,14 @@ router = APIRouter()
 
 
 @router.get(
-    "/movies",
+    "/movies/",
     responses={404: {"description": "No movies found."}}
 )
 async def get_movies(
-    page: Annotated[int, Query(default=1, ge=1)],
-    per_page: Annotated[int, Query(default=10, ge=1, le=20)],
-    db: Annotated[AsyncSession, Depends(get_db)]
+    db: Annotated[AsyncSession, Depends(get_db)],
+    page: Annotated[int, Query(ge=1)] = 1,
+    per_page: Annotated[int, Query(ge=1, le=20)] = 10
+
 ):
     offset = (page - 1) * per_page
     query = select(MovieModel).offset(offset).limit(per_page)
